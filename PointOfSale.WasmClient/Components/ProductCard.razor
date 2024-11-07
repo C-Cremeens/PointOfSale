@@ -1,0 +1,33 @@
+﻿
+
+<MudCard Outlined="true" Style="width: 300px;">
+    <MudCardMedia Image="@Product.ImageUrl" Height="200" />
+    <MudCardContent>
+        <MudText Typo="Typo.h6">@Product.Name</MudText>
+        <MudText Typo="Typo.body2" Class="mt-2">@Product.Description</MudText>
+    </MudCardContent>
+    <MudCardActions Class="d-flex justify-space-between">
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.AddShoppingCart"
+                   OnClick="@(() => OnAddToCart.InvokeAsync(Product))">
+            Add to Cart
+        </MudButton>
+        <MudIconButton Icon="@Icons.Material.Filled.Info"
+                       Color="Color.Default"
+                       OnClick="@(() => ShowProductInfo(Product))" />
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter]
+    public ProductDTO Product { get; set; }
+    [Parameter]
+    public EventCallback<ProductDTO> OnAddToCart { get; set; }
+
+    private void ShowProductInfo(ProductDTO product)
+    {
+        // This should probably do something related to showing product info
+        // rather than invoking the add to cart callback
+    }
+}

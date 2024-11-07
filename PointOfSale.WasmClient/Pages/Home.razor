@@ -1,0 +1,163 @@
+﻿@page "/"
+@inject ISnackbar SnackBar
+@inject HttpClient Http
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    @foreach (var categoryGroup in categoryGroups)
+    {
+        <MudTabPanel Text="@categoryGroup.CategoryName">
+            <!-- Tabs for Subcategories -->
+            @if (categoryGroup.SubCategoryGroups != null && categoryGroup.SubCategoryGroups.Any())
+            {
+                <MudTabs Outlined="true" Position="Position.Right" Rounded="true" Border="true"
+                         ApplyEffectsToContainer="true" Class="mt-1" PanelClass="pa-6">
+                    @foreach (var subCategoryGroup in categoryGroup.SubCategoryGroups)
+                    {
+                        <MudTabPanel Text="@subCategoryGroup.SubCategoryName">
+                            <!-- Product Cards -->
+                            <div style="height: calc(100vh - 250px); overflow-y: auto;" class="px-2">
+                                <div class="d-flex flex-wrap gap-4">
+                                    @foreach (var product in subCategoryGroup.Products)
+                                    {
+                                        <ProductCard Product="product" OnAddToCart="OpenProductDrawer" />
+                                    }
+                                </div>
+                            </div>
+                        </MudTabPanel>
+                    }
+                </MudTabs>
+            }
+            else
+            {
+                <!-- If there are no subcategories, display products directly -->
+                <div style="height: calc(100vh - 250px); overflow-y: auto;" class="px-2">
+                    <div class="d-flex flex-wrap gap-4">
+                        @foreach (var product in categoryGroup.SubCategoryGroups.SelectMany(sg => sg.Products))
+                        {
+                            <ProductCard Product="product" OnAddToCart="OpenProductDrawer" />
+                        }
+                    </div>
+                </div>
+            }
+        </MudTabPanel>
+    }
+</MudTabs>
+
+<MudDrawer @bind-Open="@_drawerOpen" Anchor="Anchor.End" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">@(_selectedProduct?.Name ?? "Select Options")</MudText>
+    </MudDrawerHeader>
+    <MudForm Model="@orderDetails" @ref="@form">
+        <div class="pa-4">
+            <MudSelect T="string" Label="Size" Required="true" @bind-Value="orderDetails.SelectedSize">
+                @if (_selectedProduct != null)
+                {
+@*                     @foreach (var size in _selectedProduct.AvailableSizes)
+                    {
+                        <MudSelectItem Value="@size">@size</MudSelectItem>
+                    } *@
+                }
+            </MudSelect>
+
+            <MudSelect T="string" Label="Gauge" Required="true" Class="mt-4" @bind-Value="orderDetails.SelectedGauge">
+                @if (_selectedProduct != null)
+                {
+@*                     @foreach (var gauge in _selectedProduct.AvailableGauges)
+                    {
+                        <MudSelectItem Value="@gauge">@gauge</MudSelectItem>
+                    } *@
+                }
+            </MudSelect>
+
+            <MudNumericField @bind-Value="orderDetails.Quantity" Label="Quantity" Required="true"
+                             Min="1" Max="999" Class="mt-4" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-8" FullWidth="true"
+                       OnClick="AddToCart">
+                Add to Cart
+            </MudButton>
+        </div>
+    </MudForm>
+</MudDrawer>
+
+
+@code {
+    private List<ProductCategoryDTO> categories;
+    private bool _drawerOpen;
+    private ProductDTO? _selectedProduct;
+    private MudForm form;
+    private OrderDetails orderDetails = new();
+
+    private List<ProductDTO> ProductDTOs = null;
+
+    private List<ProductCategoryGroup> categoryGroups = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch all products (from an API or service)
+        var allProducts = await Http.GetFromJsonAsync<List<ProductDTO>>("api/product");
+
+        // Group products by categories and subcategories
+        categoryGroups = allProducts
+            .GroupBy(p => p.ProductCategory?.Name ?? "Uncategorized")
+            .Select(categoryGroup => new ProductCategoryGroup
+                {
+                    CategoryName = categoryGroup.Key,
+                    SubCategoryGroups = categoryGroup
+                        .GroupBy(p => p.ProductSubCategory?.Name ?? "No Subcategory")
+                        .Select(subCategoryGroup => new ProductSubCategoryGroup
+                        {
+                            SubCategoryName = subCategoryGroup.Key,
+                            Products = subCategoryGroup.ToList()
+                        })
+                        .ToList()
+                })
+            .ToList();
+    }
+
+
+    private class OrderDetails
+    {
+        public string SelectedSize { get; set; }
+        public string SelectedGauge { get; set; }
+        public int Quantity { get; set; } = 1;
+    }
+
+    private void OpenProductDrawer(ProductDTO product)
+    {
+        _selectedProduct = product;
+        orderDetails = new OrderDetails();
+        _drawerOpen = true;
+    }
+
+    private async Task AddToCart()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            // Here you would add the item to your shopping cart
+            // Example: await CartService.AddItem(_selectedProduct, orderDetails);
+            _drawerOpen = false;
+            // Show success message
+            await InvokeAsync(() =>
+            {
+                var options = new MudBlazor.DialogOptions { Position = DialogPosition.TopCenter };
+                //Snackbar.Add("Item added to cart", Severity.Success);
+            });
+        }
+    }
+
+    public class ProductCategoryGroup
+    {
+        public string CategoryName { get; set; }
+        public List<ProductSubCategoryGroup> SubCategoryGroups { get; set; }
+    }
+
+    public class ProductSubCategoryGroup
+    {
+        public string SubCategoryName { get; set; }
+        public List<ProductDTO> Products { get; set; }
+    }
+}

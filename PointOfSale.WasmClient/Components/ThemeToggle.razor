@@ -1,0 +1,23 @@
+﻿@inject BitzArt.Blazor.Cookies.ICookieService cookieService
+
+
+<MudSwitch Value="IsDarkMode" ValueChanged="ToggleTheme" T="bool" Color="Color.Primary" Class="ma-4" Label="Light/Dark" />
+<MudThemeProvider IsDarkMode="@IsDarkMode" Theme="@_theme" @ref="@_mudThemeProvider" />
+
+@code {
+    [Parameter]
+    public bool IsDarkMode { get; set; }
+    private MudTheme _theme = new MudTheme();
+    private string dataKey = "darkTheme";
+
+    private MudThemeProvider _mudThemeProvider;
+
+    private async Task ToggleTheme(bool value)
+    {
+        IsDarkMode = !IsDarkMode;
+        await cookieService.SetAsync("IsDarkMode", IsDarkMode.ToString(), DateTime.UtcNow.AddYears(10));
+
+        IsDarkMode = value;
+        //await localStorage.SetItemAsync(dataKey, IsDarkMode);
+    }
+}
