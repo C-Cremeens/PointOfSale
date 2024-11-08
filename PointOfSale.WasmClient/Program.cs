@@ -33,7 +33,7 @@ public class Program
 
         // Configure HTTP client
         builder.Services.AddScoped(sp =>
-            new HttpClient { BaseAddress = new Uri(@"https://pointofsaleapiservice.azure-api.net/api") });
+            new HttpClient { BaseAddress = new Uri(@"https://divinedesignsapiservice.azure-api.net") });
 
         builder.Services.AddMudServices();
         builder.AddBlazorCookies();
