@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <UserSecretsId>2fcb2131-314d-48f0-ae21-a3a15eed104b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,4 +23,9 @@
     <ProjectReference Include="..\PointOfSale.Shared\PointOfSale.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\manifest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

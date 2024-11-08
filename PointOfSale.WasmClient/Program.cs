@@ -28,8 +28,12 @@ public class Program
         //builder.Services.AddScoped(sp =>
         //    new HttpClient { BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "https://localhost:5002") });
 
+        // Load configuration from multiple sources
+
+
+        // Configure HTTP client
         builder.Services.AddScoped(sp =>
-            new HttpClient { BaseAddress = new Uri( "https://localhost:7211") });
+            new HttpClient { BaseAddress = new Uri(@"https://pointofsaleapiservice.azure-api.net/api") });
 
         builder.Services.AddMudServices();
         builder.AddBlazorCookies();

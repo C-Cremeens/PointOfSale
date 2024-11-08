@@ -1,7 +1,6 @@
 {
-  "name": "PointOfSale.WasmClient",
-  "short_name": "PointOfSale.WasmClient",
-  "id": "./",
+  "name": "Point of Sale",
+  "short_name": "POS",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -11,12 +10,14 @@
     {
       "src": "icon-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "icon-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     }
   ]
 }
