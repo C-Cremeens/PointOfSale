@@ -26,7 +26,7 @@ public class ProductController : ControllerBase
                 Specifications = new SheetMetalSpecifications
                 {
                     AvailableGauges = new() { "22ga", "24ga", "26ga" },
-                    AvailableSizes = new() { "4x8", "4x10" },
+                    AvailableSizes = new() { "22ga", "24ga", "26ga" },
                     Material = "Galvanized Steel",
                     WeightPerUnit = 40.5m
                 }
@@ -42,7 +42,7 @@ public class ProductController : ControllerBase
                 Specifications = new SheetMetalSpecifications
                 {
                     AvailableGauges = new() { "0.025\"", "0.032\"", "0.040\"" },
-                    AvailableSizes = new() { "4x8", "4x12" },
+                    AvailableSizes = new() { "0.025\"", "0.032\"", "0.040\""},
                     Material = "Aluminum",
                     WeightPerUnit = 12.8m
                 }
@@ -59,6 +59,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 2, Name = "Length" },
                 Specifications = new StructuralSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     AvailableThicknesses = new() { "1/8\"", "3/16\"", "1/4\"" },
                     AvailableLengths = new() { "20'", "24'" },
                     AvailableWidths = new() { "2\"", "3\"", "4\"" },
@@ -76,6 +77,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 2, Name = "Length" },
                 Specifications = new StructuralSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     AvailableThicknesses = new() { "3/16\"", "1/4\"" },
                     AvailableLengths = new() { "20'", "24'" },
                     AvailableWidths = new() { "3\"", "4\"", "6\"" },
@@ -95,6 +97,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 2, Name = "Length" },
                 Specifications = new PipingSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     AvailableDiameters = new() { "1/2\"", "3/4\"", "1\"", "1-1/2\"" },
                     AvailableSchedules = new() { "40", "80" },
                     Material = "Black Steel",
@@ -111,6 +114,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 2, Name = "Length" },
                 Specifications = new PipingSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     AvailableDiameters = new() { "1/2\"", "3/4\"", "1\"" },
                     AvailableSchedules = new() { "Type L", "Type M" },
                     Material = "Copper",
@@ -129,6 +133,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 3, Name = "Each" },
                 Specifications = new HardwareSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     Size = "3/8\"-16",
                     Thread = "UNC",
                     Grade = "Grade 5",
@@ -146,6 +151,7 @@ public class ProductController : ControllerBase
                 UnitOfMeasure = new UnitOfMeasureDTO { Id = 3, Name = "Each" },
                 Specifications = new HardwareSpecifications
                 {
+                    AvailableSizes = new() { "2x2x1/4", "2x2x3/16" },
                     Size = "1/4\"-20",
                     Thread = "UNC",
                     Grade = "Grade 2",

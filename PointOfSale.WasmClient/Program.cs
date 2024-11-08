@@ -13,7 +13,7 @@ public class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(@"https://localhost:7213") });
+        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7211") });
 
         //builder.Services.AddHttpClient<ClientDataService>(client =>
         //    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));

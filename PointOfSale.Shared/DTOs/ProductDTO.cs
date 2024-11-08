@@ -33,6 +33,8 @@ public enum ProductType
 public interface IProductSpecifications
 {
     ProductType Type { get; }
+
+    List<string> AvailableSizes { get; init; }
 }
 
 public record SheetMetalSpecifications : IProductSpecifications
@@ -47,6 +49,8 @@ public record SheetMetalSpecifications : IProductSpecifications
 public record StructuralSpecifications : IProductSpecifications
 {
     public ProductType Type => ProductType.Structural;
+
+    public required List<string> AvailableSizes { get; init; }
     public required List<string> AvailableThicknesses { get; init; }
     public required List<string> AvailableLengths { get; init; }
     public required List<string> AvailableWidths { get; init; }
@@ -57,6 +61,8 @@ public record StructuralSpecifications : IProductSpecifications
 public record PipingSpecifications : IProductSpecifications
 {
     public ProductType Type => ProductType.Piping;
+
+    public required List<string> AvailableSizes { get; init; }
     public required List<string> AvailableDiameters { get; init; }
     public required List<string> AvailableSchedules { get; init; }
     public string? Material { get; init; }
@@ -66,6 +72,8 @@ public record PipingSpecifications : IProductSpecifications
 public record HardwareSpecifications : IProductSpecifications
 {
     public ProductType Type => ProductType.Hardware;
+
+    public required List<string> AvailableSizes { get; init; }
     public required string Size { get; init; }
     public string? Thread { get; init; }
     public string? Grade { get; init; }

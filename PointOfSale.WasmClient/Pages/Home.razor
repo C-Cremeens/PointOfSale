@@ -53,22 +53,22 @@
             <MudSelect T="string" Label="Size" Required="true" @bind-Value="orderDetails.SelectedSize">
                 @if (_selectedProduct != null)
                 {
-@*                     @foreach (var size in _selectedProduct.AvailableSizes)
+                    @foreach (var size in _selectedProduct.Specifications.AvailableSizes)
                     {
                         <MudSelectItem Value="@size">@size</MudSelectItem>
-                    } *@
+                    }
                 }
             </MudSelect>
 
-            <MudSelect T="string" Label="Gauge" Required="true" Class="mt-4" @bind-Value="orderDetails.SelectedGauge">
+@*             <MudSelect T="string" Label="Gauge" Required="true" Class="mt-4" @bind-Value="orderDetails.SelectedGauge">
                 @if (_selectedProduct != null)
                 {
-@*                     @foreach (var gauge in _selectedProduct.AvailableGauges)
+                    @foreach (var gauge in _selectedProduct.AvailableGauges)
                     {
                         <MudSelectItem Value="@gauge">@gauge</MudSelectItem>
-                    } *@
+                    }
                 }
-            </MudSelect>
+            </MudSelect> *@
 
             <MudNumericField @bind-Value="orderDetails.Quantity" Label="Quantity" Required="true"
                              Min="1" Max="999" Class="mt-4" />
