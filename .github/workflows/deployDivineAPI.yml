@@ -1,0 +1,20 @@
+name: Deploy Devine Designs Api
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubunto-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      
+      - name: Install dependencies
+        run: dotnet restore ./PointOfSale.Api/PointOfSale.Api.csproj
+
+      - name: Build
+        run: dotnet build ./PointOfSale.Api/PointOfSale.Api.csproj --configuration Release --no-restore
